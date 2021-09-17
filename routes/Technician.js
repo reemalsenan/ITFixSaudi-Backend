@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router();
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 //Models 
 const Technician = require('../models/Technician')
@@ -21,8 +23,10 @@ router.post('/login', async (req, res) => {
     try {
         let technician = await Technician.findOne({email: email})
         if(!technician) throw new Error('Wrong email address!') // technician == null
-        if(password != technician.password) throw new Error('Wrong password!')
-        res.json({message: "Welcome back!"})
+        if(!bcrypt.compareSync(password, technician.password)) throw new Error('Wrong password!')
+        technician.password = undefined
+        let token = jwt.sign({technician}, process.env.SECRETKEY, {expiresIn: 60 * 60 * 1000})
+        res.json({message: "Welcome back!", token})
     }catch(err){
         res.status(401).json({name: err.name ,message: err.message, url: req.originalUrl})
     }
