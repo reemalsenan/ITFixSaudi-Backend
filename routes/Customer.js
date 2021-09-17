@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router();
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // Models 
 const Customer = require('../models/Customer')
@@ -21,8 +23,10 @@ router.post('/login', async (req, res) => {
     try {
         let customer = await Customer.findOne({email: email})
         if(!customer) throw new Error('Wrong email address!') // customer == null
-        if(password != customer.password) throw new Error('Wrong password!')
-        res.json({message: "Welcome back!"})
+        if(!bcrypt.compareSync(password, customer.password)) throw new Error('Wrong password!')
+        customer.password = undefined // to prevent it from sending the password
+        let token = jwt.sign({customer}, process.env.SECRETKEY, {expiresIn: 60 * 60 * 1000 })
+        res.json({message: "Welcome back!", token})
     }catch(err){
         res.status(401).json({name: err.name ,message: err.message, url: req.originalUrl})
     }
