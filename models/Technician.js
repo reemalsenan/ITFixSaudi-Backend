@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
 const technicianSchema = mongoose.Schema({
     firstName:{
@@ -47,5 +48,13 @@ const technicianSchema = mongoose.Schema({
     }]
 }, {timestamp: true})
 
+technicianSchema.pre("save", function(next, done){
+    let salt = bcrypt.genSaltSync()
+    let hash = bcrypt.hashSync(this.password, salt)
+
+    this.password = hash
+    next()
+    done()
+})
 const Technician = mongoose.model('technician', technicianSchema);
 module.exports = Technician
