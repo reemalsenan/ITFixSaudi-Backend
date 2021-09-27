@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use(cors());
 
+app.use('/api/v1/order', require('./routes/Order'))
 app.use('/api/v1/customer', require('./routes/Customer'))
 app.use('/api/v1/technician', require('./routes/Technician'))
 

@@ -33,6 +33,7 @@ const customerSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "order"
     }]
+
 }, {Timestamp: true})
 
 const Customer = mongoose.model('customer', customerSchema);
