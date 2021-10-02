@@ -34,6 +34,7 @@ const customerSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "order"
     }]
+
 }, {Timestamp: true})
 
 customerSchema.pre("save", function(next, done){
