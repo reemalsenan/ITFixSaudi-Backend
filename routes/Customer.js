@@ -32,4 +32,15 @@ router.post('/login', async (req, res) => {
     }
 })
 
+// All customers 
+router.get("/allCustomers", async(req, res) => {
+    try{
+        const allCustomers = await Customer.find()
+        res.status(200).json({ allCustomers })
+    }catch(err){
+        res.status(400).json({name: err.name ,message: err.message, url: req.originalUrl})
+    }
+})
+
+
 module.exports = router
