@@ -28,16 +28,16 @@ const orderSchema = mongoose.Schema({
     status:{
         type: Array,
     },
-    technician:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: "technician"
-    },
-    customer:{
-        type:mongoose.Schema.Types.ObjectId,
-        required:false,
-        ref:"customer"
-    }
+    // technician:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     required: false,
+    //     ref: "technician"
+    // },
+    // customer:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     required:false,
+    //     ref:"customer"
+    // }
 
 },{timestamp : true})
 

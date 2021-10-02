@@ -21,6 +21,16 @@ router.post('/new' , async(req, res) => {
 })
 
 
+// GET - Display Orders
+router.get("/allOrders", async(req, res) => {
+    try{
+        const allOrders = await Order.find()
+        res.status(200).json({ allOrders})
+    }catch(err){
+        res.status(400).json({name: err.name, message: err.message, url: req.originalUrl})
+    }
+})
+
 // GET - One Order
 router.get('/:id', async (req,res) => {
     try{
@@ -36,21 +46,6 @@ router.get('/:id', async (req,res) => {
             message: error.message, 
             url: req.originalUrl 
         })
-    }
-})
-
-// GET - Display Orders
-router.get("/allOrders", async(req, res) => {
-    try{
-        // console.log("test")
-        const allOrders = await Order.find()
-        res.status(200).json({allOrders})
-    }catch(err){
-        res.status(400).json({
-            name : err.name ,
-            message:err.message,
-            url : req.originalUrl
-           })
     }
 })
 
