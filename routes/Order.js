@@ -20,7 +20,6 @@ router.post('/new' , async(req, res) => {
     }
 })
 
-
 // GET - Display Orders
 router.get("/allOrders", async(req, res) => {
     try{
