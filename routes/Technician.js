@@ -32,4 +32,14 @@ router.post('/login', async (req, res) => {
     }
 })
 
+// All technicians 
+router.get("/allTech", async(req, res) => {
+    try{
+        const allTech = await Technician.find()
+        res.status(200).json({ allTech })
+    }catch(err){
+        res.status(400).json({name: err.name ,message: err.message, url: req.originalUrl})
+    }
+})
+
 module.exports = router
